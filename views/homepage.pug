@@ -1,0 +1,32 @@
+doctype html
+html 
+    head 
+        title= title 
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        .container 
+            h1 Custom Object Table
+        br
+        br
+
+        a(href="/update-cobj") 
+            button Add/Update to this table
+
+        br
+        br
+
+        if data.length   
+            table 
+                thead 
+                    tr 
+                        th Pet Name
+                        th Pet Type
+                        th Pet Note
+                tbody 
+                    each item in data 
+                        tr 
+                            td= item.properties.pet_name
+                            td= item.properties.pet_type
+                            td= item.properties.pet_note
+        else 
+            p No data available.      

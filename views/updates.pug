@@ -1,0 +1,33 @@
+doctype html
+html 
+    head 
+        title= `${title}`
+        link(rel="stylesheet", href="/css/style.css")
+    body    
+        h1 Add or Updates
+        .form-container 
+            .form
+                form(action="/update-cobj" method="POST")
+                    label(for="pet_name") Pet Name : 
+                    input(type="text" id="pet_name" name="pet_name" required)
+
+                    br
+                    br
+
+                    label(for="pet_type") Pet Type : 
+                    input(type="text" id="pet_type" name="pet_type" required)
+                    
+                    br
+                    br
+
+                    label(for="pet_note") Pet Note : 
+                    input(type="text" id="pet_note" name="pet_note")
+                    
+                    br
+                    br
+
+                    button(type="submit") Submit
+                    br      
+
+            a(href="/") 
+                button Back to Home

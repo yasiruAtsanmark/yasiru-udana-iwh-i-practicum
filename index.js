@@ -25,8 +25,11 @@ app.get("/", async (req, res) => {
 
   try {
     const response = await axios.get(url, { headers });
-    return res.json(response.data);
-  } catch (error) {
+    return res.render("homepage", {
+      title: "Custom Object Data | HubSpot APIs",
+      data: response.data.results,
+    });
+} catch (error) {
     console.error(error?.response?.data || error);
     res.status(500).json({ error: "Error fetching custom object data" });
   }
@@ -36,13 +39,41 @@ app.get("/", async (req, res) => {
 
 // TODO: ROUTE 2 - Create a new app.get route for the form to create or update new custom object data. Send this data along in the next route.
 
-app.get('/update-cobj', (req, res) => {
-    return res.json(response.data);
+app.get("/update-cobj", (req, res) => {
+  return res.render("updates", { title: "Create or Update Object Form | Integrating With HubSpot I Practicum" });
 });
 
 // * Code for Route 2 goes here
 
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
+
+app.post("/update-cobj", async (req, res) => {
+  const url = "https://api.hubapi.com/crm/v3/objects/2-221723691";
+
+  const headers = {
+    Authorization: `Bearer ${PRIVATE_APP_ACCESS}`,
+    "Content-Type": "application/json",
+  };
+
+  const data = {
+    properties: {
+      pet_name: req.body.pet_name,
+      pet_type: req.body.pet_type,
+      pet_note: req.body.pet_note,
+    },
+  };
+
+  try {
+    await axios.post(url, data, { headers });
+    res.redirect("/");
+  } catch (error) {
+    console.error(error?.response?.data || error);
+
+    console.error(error.message);
+    res.send('Failed to create or update custom object');
+  }
+
+});
 
 // * Code for Route 3 goes here
 
